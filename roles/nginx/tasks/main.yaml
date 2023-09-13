@@ -1,0 +1,6 @@
+
+  - name: Installs and configures Nginx web server. 
+    ansible.builtin.apt:
+      name: nginx
+
+
