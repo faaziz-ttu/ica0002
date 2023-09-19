@@ -1,4 +1,4 @@
-faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=31222 ansible_user=ubuntu
+faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=35722 ansible_user=ubuntu
 
-[web-servers]
+[web_servers]
 faaziz-ttu-1

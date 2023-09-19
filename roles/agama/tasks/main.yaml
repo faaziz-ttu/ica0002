@@ -1,0 +1,34 @@
+---
+#step 1:
+  - name: User AGAMA
+    ansible.builtin.user:
+      name: agama
+      system: yes
+      
+#step 2:   
+  - name: Creates directory owned by AGAMA
+    ansible.builtin.file:
+      state: directory
+      path: /opt/agama
+      owner: agama
+      group: agama
+      mode: 0775
+  
+#step 3:
+  #Not sure if it works or not
+  - name: Install python-flask
+    ansible.builtin.apt:
+      name: python3-flask-sqlalchemy
+      update_cache: yes
+      
+#step 4:
+  - name: Installs agama.py
+    ansible.builtin.get_url:
+      url: https://raw.githubusercontent.com/hudolejev/agama/master/agama.py
+      dest: /opt/agama
+      mode: 0755      
+      
+  - name: Install pymysql
+    ansible.builtin.apt:
+      name: python3-pymysql
+      
