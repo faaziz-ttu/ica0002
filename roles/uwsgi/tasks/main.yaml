@@ -1,18 +1,24 @@
-- name: Install uwsgi packages
-  apt:
-    pkg:
-    - uwsgi
-    - uwsgi-plugin-python3
+---
 
-- name: copy the uwsgi config file
-  copy:
-    src: agama.ini
-    dest: /etc/uwsgi/apps-enabled/agama.ini
-  notify: restart uwsgi
+  - name: Install uwsgi packages
+    apt:
+      name: uwsgi
+    
+  - name: Install uwsgi-plugin-python3 packages
+    apt:
+      name: uwsgi-plugin-python3
+    
+  - name: copy the uwsgi config file
+    template:
+      src: agama.ini
+      dest: /etc/uwsgi/apps-enabled/agama.ini
+      owner: agama
+      mode: 0600
+    no_log: true
+    notify: restart uwsgi
 
-
-- name: start uwsgi
-  service:
-    name: uwsgi
-    state: started
-    enabled: yes
+  - name: start uwsgi
+    service:
+      name: uwsgi
+      state: started
+      enabled: yes
