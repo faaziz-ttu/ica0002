@@ -1,4 +1,4 @@
-mysql_host: 192.168.42.152
+mysql_host: faaziz-ttu-2
 mysql_database: agama
 mysql_user: agama
 mysql_password: !vault |
@@ -8,3 +8,19 @@ mysql_password: !vault |
           66303634333937616363663433666639346530633065363764306533643332393436366162383731
           6436626332633365390a613461623539343764626166663365393032373265346632306135323166
           6537
+
+dns_forwarders:
+  - 8.8.8.8
+  - 1.1.1.1
+  - 9.9.9.9
+  - 9.9.9.10
+
+local_network: 192.168.42.0/23
+localhost: 127.0.0.0/8  
+localhost_address: 127.0.0.1
+
+vm1_ip: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+vm2_ip: 192.168.42.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
+
+domain: fetirix
+fqdn: fetirix.io

@@ -1,0 +1,4 @@
+zone "{{ fqdn }}" {
+  type master;
+  file "/var/lib/bind/db.{{ fqdn }}";
+};
