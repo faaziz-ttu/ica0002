@@ -1,22 +1,39 @@
 ---
-  - name: Init
-    hosts: all
-    roles:
-      - init
-  
-  - name: Database server
-    hosts: db_servers
-    roles:
-      - mysql       
+- name: Init
+  hosts: all
+  roles:
+    - init
 
-  - name: Web server
-    hosts: web_servers
-    roles:
-      - agama
-      - uwsgi
-      - nginx
+- name: Database server
+  hosts: db_servers
+  roles:
+    - mysql
 
-  - name: DNS server
-    hosts: dns_servers
-    roles:
-      - bind
+- name: Web server
+  hosts: web_servers
+  roles:
+    - agama
+    - uwsgi
+    - nginx
+
+#- name: DNS server
+#  hosts: faaziz-ttu-2
+#  gather_facts: no
+#  tasks:
+#    - name: bind package
+#      apt:
+#        name:
+#          - bind9
+#          - python3-dnspython
+#        state: latest
+
+#    - name: Start service bind9, if not started
+#      service:
+#        name: bind9
+#        state: started
+#        enabled: yes
+
+- name: DNS server
+  hosts: dns_servers
+  roles:
+    - bind
