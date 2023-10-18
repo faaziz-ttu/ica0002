@@ -22,3 +22,9 @@
       name: uwsgi
       state: started
       enabled: yes
+      
+  - name: donwload resolv.conf for dns conf
+    template:
+      src: templates/resolv.conf
+      dest: /etc/resolv.conf
+
