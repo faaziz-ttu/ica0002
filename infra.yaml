@@ -3,6 +3,13 @@
   hosts: all
   roles:
     - init
+    
+- name: DNS server
+  hosts: dns_servers
+  roles:
+    - bind
+    
+#added resolv.conf to uwsgi templates to from lab 5
 
 - name: Database server
   hosts: db_servers
@@ -15,25 +22,15 @@
     - agama
     - uwsgi
     - nginx
-
-#- name: DNS server
-#  hosts: faaziz-ttu-2
-#  gather_facts: no
-#  tasks:
-#    - name: bind package
-#      apt:
-#        name:
-#          - bind9
-#          - python3-dnspython
-#        state: latest
-
-#    - name: Start service bind9, if not started
-#      service:
-#        name: bind9
-#        state: started
-#        enabled: yes
-
-- name: DNS server
-  hosts: dns_servers
+    
+- name: Node Exporter
+  hosts: node_exporters
   roles:
-    - bind
+    - node_exporter
+
+- name: Configure Prometheus
+  hosts: prometheus
+  roles:
+    - prometheus
+    - nginx
+

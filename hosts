@@ -9,3 +9,10 @@ faaziz-ttu-2
 
 [web_servers]
 faaziz-ttu-1
+
+[node_exporters]
+faaziz-ttu-1
+faaziz-ttu-2
+
+[prometheus]
+faaziz-ttu-2

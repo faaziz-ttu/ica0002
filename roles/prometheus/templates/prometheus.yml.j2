@@ -1,0 +1,28 @@
+global:
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  scrape_timeout:      10s # By default, scrape targets every 10 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
+
+scrape_configs:
+
+  - job_name: prometheus
+    honor_timestamps: true
+    scrape_interval: 5s
+    scrape_timeout: 5s
+    metrics_path: /prometheus/metrics
+    scheme: http
+    static_configs:
+    - targets:
+      - localhost:9090
+        
+  - job_name: linux
+    honor_timestamps: true
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    metrics_path: /metrics
+    scheme: http
+    static_configs:
+      - targets: 
+        - 'faaziz-ttu-1.{{ fqdn }}:9100'
+        - 'faaziz-ttu-2.{{ fqdn }}:9100'
+        - 'faaziz-ttu-3.{{ fqdn }}:9100'
