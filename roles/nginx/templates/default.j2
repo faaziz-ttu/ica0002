@@ -1,0 +1,20 @@
+server {
+	listen 80 default_server;
+        listen [::]:80 default_server;
+
+	server_name _;
+
+
+         location / {
+        	uwsgi_pass localhost:5000;
+		include uwsgi_params;
+		proxy_set_header Host $http_host;
+        }     
+
+	{% if inventory_hostname in groups['prometheus'] %}
+        #Reverse proxy for Prometheus
+                location /prometheus {
+                proxy_pass http://{{localhost_address}}:9090;
+        	}
+        {% endif %}                
+}

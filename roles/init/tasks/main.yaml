@@ -1,8 +1,21 @@
 #- name: Ansible ping module
 #  ansible.builtin.ping:
  - name: Update APT cache
-   ansible.builtin.apt:
+   apt:
      cache_valid_time: 86400
+     
+ - name: Install node exporter
+   apt:
+     name: 
+     - prometheus-node-exporter
+     - nginx
+
+ - name: Start node exporter
+   service:
+     name: prometheus-node-exporter
+     state: started
+     enabled: yes
+
   
  #- name: add a new user juri
  #  ansible.builtin.user:

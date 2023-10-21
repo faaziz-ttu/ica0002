@@ -22,11 +22,6 @@
     - agama
     - uwsgi
     - nginx
-    
-- name: Node Exporter
-  hosts: node_exporters
-  roles:
-    - node_exporter
 
 - name: Configure Prometheus
   hosts: prometheus
