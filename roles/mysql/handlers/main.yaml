@@ -1,7 +1,11 @@
----
+- name: Restart mysql
+  service:
+    name: mysql
+    state: restarted
+    enabled: yes
 
-  - name: Restart mysql
-    ansible.builtin.service:
-      name: mysql
-      state: restarted
-      enabled: yes
+- name: Restart MySQL exporter
+  service:
+    name: prometheus-mysqld-exporter
+    state: restarted
+    enabled: yes

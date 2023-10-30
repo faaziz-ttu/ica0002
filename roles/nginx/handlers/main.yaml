@@ -1,9 +1,19 @@
 ---
   - name: Systemctl daemon-reload
-    ansible.builtin.shell: "systemctl daemon-reload"
+    shell: "systemctl daemon-reload"
 
   - name: Restart Nginx
-    ansible.builtin.service:
+    service:
       name: nginx
+      state: restarted
+      enabled: yes
+
+# nginx exporter
+  - name: Reload systemd
+    shell: "systemctl daemon-reload"
+
+  - name: Restart Nginx exporter
+    service:
+      name: nginx-prometheus-exporter
       state: restarted
       enabled: yes

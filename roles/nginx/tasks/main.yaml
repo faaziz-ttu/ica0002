@@ -1,16 +1,38 @@
   - name: Installs and configures Nginx web server. 
-    ansible.builtin.apt:
+    apt:
       name: nginx
 
   - name: Copy default to somewhere
-    ansible.builtin.template:
+    template:
       src: default.j2
       dest: /etc/nginx/sites-enabled/default
     notify: Restart Nginx
     
   - name: Start nginx unconditionally
-    ansible.builtin.service:
+    service:
       name: nginx
+      state: started
+      enabled: yes
+      
+# nginx exporter
+
+  - name: Download and unarchive Nginx exporter
+    unarchive:
+      src: https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v0.8.0/nginx-prometheus-exporter-0.8.0-linux-amd64.tar.gz
+      dest: /usr/local/bin
+      remote_src: yes
+
+  - name: Create Nginx exporter service
+    template:
+      src: nginx-prometheus-exporter.service.j2
+      dest: /etc/systemd/system/nginx-prometheus-exporter.service
+    notify: 
+      - Reload systemd
+      - Restart Nginx exporter
+
+  - name: Enable exporter service
+    service:
+      name: nginx-prometheus-exporter
       state: started
       enabled: yes
 

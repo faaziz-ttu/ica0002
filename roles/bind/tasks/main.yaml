@@ -14,7 +14,7 @@
       enabled: yes
 
   - name: Configure options.j2
-    ansible.builtin.template:
+    template:
       src: templates/named.conf.options.j2
       dest: /etc/bind/named.conf.options
     notify: Restart bind
@@ -39,3 +39,14 @@
         - Restart bind 
         - Reload rndc  
 
+# Bind exporter
+
+  - name: Bind9 exporter
+    apt:
+      name: prometheus-bind-exporter
+
+  - name: Start Bind9 exporter
+    service:
+      name: prometheus-bind-exporter
+      state: started
+      enabled: yes

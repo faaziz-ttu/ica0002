@@ -8,7 +8,6 @@
    apt:
      name: 
      - prometheus-node-exporter
-     - nginx
 
  - name: Start node exporter
    service:
