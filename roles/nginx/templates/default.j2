@@ -19,7 +19,7 @@ server {
         }
         {% endif %}  
         
-        {% if inventory_hostname in groups['node_exporters'] %}
+        {% if inventory_hostname in groups['init'] %}
         #Reverse proxy for node exporters
 
         location /metrics {

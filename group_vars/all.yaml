@@ -28,8 +28,8 @@ local_network: 192.168.42.0/23
 localhost: 127.0.0.0/8  
 localhost_address: 127.0.0.1
 
-vm1_ip: 192.168.43.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
-vm2_ip: 192.168.43.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
+vm1_ip: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+vm2_ip: 192.168.42.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
 
 vm1_port_number : "{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}80"
 vm2_port_number : "{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}80"
@@ -41,7 +41,24 @@ fqdn: fetirix.io
 dns_record:
  - name: faaziz-ttu-2
    type: A
-   ipaddress: 192.168.43.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
+   ipaddress: 192.168.42.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
  - name: faaziz-ttu-1
    type: A
-   ipaddress: 192.168.43.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+   ipaddress: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+
+prometheus_exporters:
+  
+  node:
+    port: 9100
+
+  nginx:
+    port: 9113
+
+  mysql:
+    port: 9104
+
+  bind:
+    port: 9119   
+
+grafana_port: 3000
+docker_grafana_port: 3001

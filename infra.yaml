@@ -1,6 +1,6 @@
 ---
 - name: Init
-  hosts: all
+  hosts: init
   roles:
     - init
     
@@ -28,4 +28,10 @@
   roles:
     - prometheus
     - nginx
+    
+- name: Grafana
+  hosts: grafana
+  roles:
+    - grafana
+
 

@@ -15,6 +15,10 @@
      state: started
      enabled: yes
 
+ - name: Install up-to-date CA certificates
+   apt:
+     name: ca-certificates=20230311ubuntu0.20.04.1
+     state: present
   
  #- name: add a new user juri
  #  ansible.builtin.user:
