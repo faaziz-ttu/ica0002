@@ -33,5 +33,15 @@
   hosts: grafana
   roles:
     - grafana
+    
+- name: Influxdb
+  hosts: influxdb
+  roles:
+    - influxdb
 
+    
+- name: Pinger
+  hosts: pinger
+  roles:
+    - pinger  
 

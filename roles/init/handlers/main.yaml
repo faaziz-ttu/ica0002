@@ -4,10 +4,13 @@
   service:
     name: nginx
     state: restarted
-    enabled: yes
 
 - name: Restart prometheus-node-exporter
   service:
     name: prometheus-node-exporter
     state: restarted
-    enabled: yes
+
+- name: Restart Rsyslog
+  service:
+    name: rsyslog
+    state: restarted
