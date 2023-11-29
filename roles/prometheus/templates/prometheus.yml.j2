@@ -26,3 +26,31 @@ scrape_configs:
         - 'faaziz-ttu-1.{{ fqdn }}:9100'
         - 'faaziz-ttu-2.{{ fqdn }}:9100'
         - 'faaziz-ttu-3.{{ fqdn }}:9100'
+
+  - job_name: bind9
+    static_configs:
+      - targets:
+{% for vm in groups['init'] %}
+          - {{ vm }}:{{ prometheus_exporters['bind']['port'] }}
+{% endfor %}
+
+  - job_name: mysql
+    static_configs:
+      - targets:
+{% for vm in groups['db_servers'] %}
+        - {{ vm }}:{{ prometheus_exporters['mysql']['port'] }}
+{% endfor %}
+
+  - job_name: nginx
+    static_configs:
+      - targets:
+{% for vm in groups['all'] %}
+        - {{ vm }}:{{ prometheus_exporters['nginx']['port'] }}
+{% endfor %}
+
+  - job_name: influxdb
+    static_configs:
+      - targets:
+{% for vm in groups['influxdb'] %}
+        - {{ vm }}:{{ prometheus_exporters['influxdb']['port'] }}
+{% endfor %}

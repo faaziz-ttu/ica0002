@@ -18,6 +18,14 @@ mysql_exporter_pass: !vault |
           3962333939653635360a616662326561363633343731636230363638323963356164353532616335
           6439
           
+grafana_user: admin
+grafana_key:  !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          63346362613732313761353733663265646264626335356337346633353162383038323330363765
+          3936663539343135353634303535383539666634353235380a386335663630363463383033656538
+          64663132636231643964626439353732366130333930633933666563623436303833303338376264
+          3962333939653635360a616662326561363633343731636230363638323963356164353532616335
+          6439
 dns_forwarders:
   - 8.8.8.8
   - 1.1.1.1
@@ -28,8 +36,8 @@ local_network: 192.168.42.0/23
 localhost: 127.0.0.0/8  
 localhost_address: 127.0.0.1
 
-vm1_ip: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
-vm2_ip: 192.168.42.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
+vm1_ip: 192.168.43.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+vm2_ip: 192.168.43.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
 
 vm1_port_number : "{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}80"
 vm2_port_number : "{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}80"
@@ -41,10 +49,10 @@ fqdn: fetirix.io
 dns_record:
  - name: faaziz-ttu-2
    type: A
-   ipaddress: 192.168.42.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
+   ipaddress: 192.168.43.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
  - name: faaziz-ttu-1
    type: A
-   ipaddress: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+   ipaddress: 192.168.43.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
 
 prometheus_exporters:
   
@@ -58,7 +66,11 @@ prometheus_exporters:
     port: 9104
 
   bind:
-    port: 9119   
+    port: 9119
+       
+  influxdb:
+    port: 9424
 
 grafana_port: 3000
 docker_grafana_port: 3001
+
