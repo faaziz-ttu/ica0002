@@ -10,6 +10,12 @@
   service:
     name: influxdb
     state: started
+    
+- name: Influx Config
+  template:
+    src: influxdb.conf.j2
+    dest: /etc/influxdb/influxdb.conf
+  notify: Restart Influxdb
 
 - name: Download Telegraf package
   get_url:

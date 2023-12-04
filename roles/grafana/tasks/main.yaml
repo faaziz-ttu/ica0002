@@ -37,15 +37,6 @@
     dest: /etc/grafana/grafana.ini
   notify: Restart Grafana
 
-- name: Create Grafana directory
-  file: 
-    path: "{{ item }}"
-    state: directory
-    recurse: true
-  loop:
-      - /opt/grafana/provisioning/dashboards
-      - /opt/grafana/provisioning/datasources
-
 - name: Grafana Dashboard Setting
   template:
     src: dashboard.yaml.j2
@@ -58,15 +49,10 @@
     dest: /etc/grafana/provisioning/datasources/default.yaml
   notify: Restart Grafana
 
-- name: Create Grafana Dashboards Json Folder
-  file:
-    path: /var/lib/grafana/dashboards/
-    state: directory
-
 - name: Main Dashboard Json
   copy:
     src: "../files/{{ item }}"
-    dest: /var/lib/grafana/dashboards/{{ item }}
+    dest: /etc/grafana/provisioning/dashboards/{{ item }}
   loop:
     - main.json
   notify: Restart Grafana

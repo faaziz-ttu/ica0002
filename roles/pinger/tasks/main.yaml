@@ -4,22 +4,37 @@
   user:
     name: pinger
 
+- name: Install fping
+  apt:
+    name: fping
+    state: present
+
 - name: Create pinger configuration directory
   file:
     path: /etc/pinger
     state: directory
-    mode: '0751'
-
+    mode: '0755'
+  notify: 
+    - Reload systemd
+    - Restart pinger
+     
 - name: Create pinger configuration
   template:
     src: pinger.conf.j2
     dest: /etc/pinger/pinger.conf
+    owner: pinger
+  notify: 
+    - Reload systemd
+    - Restart pinger
 
 - name: Setup pinger script
   template:
     src: pinger.sh.j2
     dest: /usr/local/bin/pinger
     mode: '0777'
+  notify: 
+    - Reload systemd
+    - Restart pinger    
 
 - name: Create pinger service
   template:
