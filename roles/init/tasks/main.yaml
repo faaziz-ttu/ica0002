@@ -28,9 +28,14 @@
 
  - name: Reconfigure Rsyslog
    template:
-     src: telegraf.conf.j2
+     src: rsyslog.conf.j2
      dest: /etc/rsyslog.d/telegraf.conf
    notify: Restart Rsyslog
+   
+ - name: Start Rsyslog
+   service:
+     name: rsyslog
+     state: started
   
  #- name: add a new user juri
  #  ansible.builtin.user:

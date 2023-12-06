@@ -3,6 +3,7 @@
     name: 
       - bind9
       - python3-dnspython 
+      - prometheus-bind-exporter
     state: latest   
 
 - name: Start service bind9, if not started

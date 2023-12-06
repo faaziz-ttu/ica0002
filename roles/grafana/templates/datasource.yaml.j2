@@ -10,3 +10,16 @@ datasources:
     version: 1
     editable: true
     
+  - name: influxdb-lat
+    type: influxdb
+    access: proxy
+    orgId: 1
+    url: http://faaziz-ttu-2.fetirix.io:8086
+    database: latency
+
+  - name: influxdb-telegraf
+    type: influxdb
+    access: proxy
+    orgId: 1
+    url: http://faaziz-ttu-2.fetirix.io:8086
+    database: telegraf

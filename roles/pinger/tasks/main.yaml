@@ -29,9 +29,10 @@
 
 - name: Setup pinger script
   template:
-    src: pinger.sh.j2
+    src: pinger.sh
     dest: /usr/local/bin/pinger
     mode: '0777'
+    owner: pinger
   notify: 
     - Reload systemd
     - Restart pinger    
@@ -44,3 +45,8 @@
   notify: 
     - Reload systemd
     - Restart pinger
+
+- name: Start pinger on boot uo 
+  service:
+    name: pinger
+    state: started
