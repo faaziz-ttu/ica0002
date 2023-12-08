@@ -26,6 +26,12 @@ grafana_password:  !vault |
           64663132636231643964626439353732366130333930633933666563623436303833303338376264
           3962333939653635360a616662326561363633343731636230363638323963356164353532616335
           6439
+          
+backup_user: backup
+backup_server: backup
+backup_address: 192.168.42.132
+backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90          
+
 dns_forwarders:
   - 8.8.8.8
   - 1.1.1.1

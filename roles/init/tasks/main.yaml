@@ -37,6 +37,29 @@
      name: rsyslog
      state: started
   
+ - name: Add user backup 
+   user:
+     name: backup
+     state: present
+     home: /home/backup
+     shell: /bin/bash
+     generate_ssh_key: true 
+
+ - name: Generate SSH keypair for user backup
+   openssh_keypair:
+     path: /home/backup/.ssh/id_rsa
+     state: present
+     owner: backup
+     group: backup
+     mode: '0644'
+     
+ - name : Template
+   template:
+     src: known_hosts.j2
+     dest: /home/backup/.ssh/known_hosts
+     owner: backup
+     group: backup
+     
  #- name: add a new user juri
  #  ansible.builtin.user:
  #    name: juri
