@@ -10,3 +10,7 @@
     name: telegraf
     state: restarted
     enabled: yes
+
+- name: Restart systemd
+  systemd:
+    daemon-reload: true

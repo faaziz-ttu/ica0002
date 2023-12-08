@@ -4,7 +4,7 @@
   get_url:
     url: "https://dl.influxdata.com/influxdb/releases/influxdb_1.8.10_amd64.deb"
     dest: /opt/influxdb_1.8.10_amd64.deb
-    
+    checksum: sha256:b2ace09231575df7309a41cea6f9dc7ad716fe4389dc06ac04470a14bd411456
     
 - name: Install InfluxDB
   apt:
@@ -37,3 +37,29 @@
     src: telegraf.conf.j2
     dest: /etc/telegraf/telegraf.conf
   notify: restart telegraf
+  
+- name: Make sure Telegraf is running
+  service:
+    name: telegraf
+    state: started
+    
+- name: Install InfluxDB stat exporter from git
+  get_url:
+    url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_amd64
+    dest: /usr/local/bin/
+    mode: '0500'
+    owner: prometheus
+
+- name: Import Influxdb Stat Expo Template
+  template:
+    src: exporter.service.j2
+    dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
+    mode: '0644'
+  notify: Restart systemd
+
+- name: Start explorer on boot up
+  service:
+    name: prometheus-influxdb-stats-exporter
+    state: started
+    enabled: true
+

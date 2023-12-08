@@ -55,6 +55,7 @@
     dest: /etc/grafana/provisioning/dashboards/{{ item }}
   loop:
     - main.json
+    - syslog.json
   notify: Restart Grafana
 
 
