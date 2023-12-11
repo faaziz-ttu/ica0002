@@ -63,4 +63,12 @@
     state: started
     enabled: true
     
+#Backup
+
+- name: Make Backup owner of influxdb
+  file:
+    path: /home/backup/influxdb
+    state: directory
+    owner: backup
+    mode: '0744'
 

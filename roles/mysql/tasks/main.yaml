@@ -1,21 +1,21 @@
 ---
   - name: Install mysql-server
-    ansible.builtin.apt:
+    apt:
       name: mysql-server
 
   - name: Install Pymsql
-    ansible.builtin.apt:
+    apt:
       name: python3-pymysql
 
   - name: Copying and restarting mysql
-    ansible.builtin.template:
+    template:
       src: override.cnf
       dest: /etc/mysql/mysql.conf.d/override.cnf
       mode: 0644
     notify: Restart mysql
 
   - name: Start mysql
-    ansible.builtin.service:
+    service:
       name: mysql
       state: started
       enabled: yes
@@ -38,18 +38,18 @@
 #Mysql Exporter
 
   - name: Install MySQL exporter and python3-pymysql
-    ansible.builtin.apt:
+    apt:
       name: 
         - prometheus-mysqld-exporter
         - python3-pymysql
 
   - name: Create directory
-    ansible.builtin.file:
+    file:
       path: /var/lib/prometheus
       state: directory
 
   - name: Configure MySQL exporter
-    ansible.builtin.template:
+    template:
       src: my.cnf.j2
       dest: /var/lib/prometheus/.my.cnf
       owner: prometheus
@@ -66,11 +66,41 @@
     no_log: true
 
   - name: Force all notified handlers
-    ansible.builtin.meta: flush_handlers
+    meta: flush_handlers
   
   - name: Start mysql exporter
-    ansible.builtin.service:
+    service:
       name: prometheus-mysqld-exporter
       state: started
       enabled: yes
+
+#MySQL Backup
+
+  - name: Make Backup owner of MySQL DIR
+    file:
+      path: /home/backup/mysql
+      state: directory
+      owner: backup
+      mode: '0755'
+      
+  - name: MySQL backup user
+    community.mysql.mysql_user:
+      name: "{{ backup_user }}"
+      password: "{{ backup_password }}"
+      priv: "{{ mysql_database }}.*:LOCK TABLES,SELECT"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+      
+  - name: Make Backup Template
+    template:
+      src: my2.cnf.j2
+      dest: /home/backup/.my.cnf
+      owner: backup
+      mode: '0400'
+
+  - name: Make cron backup
+    template:
+      src: back.conf
+      dest: /etc/cron.d/mysql-backup
+      mode: '0400'
+      owner: root
 

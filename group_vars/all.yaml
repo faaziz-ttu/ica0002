@@ -1,6 +1,8 @@
+user: faaziz-ttu
 mysql_host: faaziz-ttu-2
 mysql_database: agama
 mysql_user: agama
+mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
 mysql_password: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           61336230363264336532353430336262316232323766623866333038323634343366353535656461
@@ -8,7 +10,7 @@ mysql_password: !vault |
           66303634333937616363663433666639346530633065363764306533643332393436366162383731
           6436626332633365390a613461623539343764626166663365393032373265346632306135323166
           6537
-          
+     
 mysql_exporter_user: mysql_exporter_second
 mysql_exporter_pass: !vault |
           $ANSIBLE_VAULT;1.1;AES256
@@ -26,11 +28,19 @@ grafana_password:  !vault |
           64663132636231643964626439353732366130333930633933666563623436303833303338376264
           3962333939653635360a616662326561363633343731636230363638323963356164353532616335
           6439
-          
+
 backup_user: backup
 backup_server: backup
 backup_address: 192.168.42.132
 backup_server_ssh_key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEu6pFFWyuRrl4WGFPQGElYN9txwTGm2wSntcpVAaN90          
+backup_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          61336230363264336532353430336262316232323766623866333038323634343366353535656461
+          3133336662313731396465663531393534386330643461370a313536346364623565653539393637
+          66303634333937616363663433666639346530633065363764306533643332393436366162383731
+          6436626332633365390a613461623539343764626166663365393032373265346632306135323166
+          6537
+
 
 dns_forwarders:
   - 8.8.8.8
@@ -42,8 +52,8 @@ local_network: 192.168.42.0/23
 localhost: 127.0.0.0/8  
 localhost_address: 127.0.0.1
 
-vm1_ip: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
-vm2_ip: 192.168.42.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
+vm1_ip: 192.168.43.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+vm2_ip: 192.168.43.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
 
 vm1_port_number : "{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}80"
 vm2_port_number : "{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}80"
@@ -55,10 +65,10 @@ fqdn: fetirix.io
 dns_record:
  - name: faaziz-ttu-2
    type: A
-   ipaddress: 192.168.42.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
+   ipaddress: 192.168.43.{{ hostvars['faaziz-ttu-2']['ansible_default_ipv4']['address'].split('.')[3] }}
  - name: faaziz-ttu-1
    type: A
-   ipaddress: 192.168.42.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
+   ipaddress: 192.168.43.{{ hostvars['faaziz-ttu-1']['ansible_default_ipv4']['address'].split('.')[3] }}
 
 prometheus_exporters:
   

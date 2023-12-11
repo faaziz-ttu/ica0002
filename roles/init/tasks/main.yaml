@@ -36,7 +36,7 @@
    service:
      name: rsyslog
      state: started
-  
+#backup lab 9  
  - name: Add user backup 
    user:
      name: backup
@@ -60,6 +60,20 @@
      owner: backup
      group: backup
      
+#Backup lab 10
+
+ - name: Make Backup owner for init
+   file:
+     path: /home/backup/restore
+     state: directory
+     owner: backup
+     mode: '0744'
+
+ - name: Duplicity
+   apt:
+     name: duplicity
+     state: present
+
  #- name: add a new user juri
  #  ansible.builtin.user:
  #    name: juri
