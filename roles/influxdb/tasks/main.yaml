@@ -72,3 +72,33 @@
     owner: backup
     mode: '0744'
 
+- name: Cron job to backup Influx
+  cron:
+    name: influxd backup
+    job: "rm -rf /home/backup/influxdb/*; influxd backup -portable /home/backup/influxdb"
+    user: backup
+    cron_file: influxdb-backup
+    weekday: "1-5"
+    hour: "12"
+    minute: "0"
+
+- name: Cron job to full backup server
+  cron:
+    name: influxd full backup
+    job: " duplicity --no-encryption full /home/backup/influxdb/ rsync://{{user}}@backup.{{fqdn}}/influxdb"
+    user: backup
+    cron_file: influxdb-backup
+    weekday: "1-5"
+    hour: "12"
+    minute: "0"
+
+- name: Cron job to incremental backup server
+  cron:
+    name: influxd incremental backup
+    job: " duplicity --no-encryption incremental /home/backup/influxdb/ rsync://{{user}}@backup.{{fqdn}}/influxdb"
+    user: backup
+    cron_file: influxdb-backup
+    weekday: "1-5"
+    hour: "12"
+    minute: "0"    
+

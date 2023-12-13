@@ -51,7 +51,7 @@
      state: present
      owner: backup
      group: backup
-     mode: '0644'
+     mode: '0600'
      
  - name : Template
    template:
