@@ -104,3 +104,14 @@
       mode: '0400'
       owner: root
 
+# lab 11 
+
+  - name: Template mysql exporter replication metrics
+    template:
+      dest: /etc/default/prometheus-mysqld-exporter
+      src: my3.cnf.j2
+      mode: '0600'
+      owner: prometheus
+      group: prometheus
+    notify: Restart MySQL exporter
+
