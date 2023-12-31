@@ -114,4 +114,11 @@
       owner: prometheus
       group: prometheus
     notify: Restart MySQL exporter
+    
+  - name: MySQL replication user
+    community.mysql.mysql_user:
+      name: "{{ replication_user }}"
+      password: "{{ replication_password }}"
+      priv: "*.*:REPLICATION SLAVE"
+      login_unix_socket: /var/run/mysqld/mysqld.sock
 
