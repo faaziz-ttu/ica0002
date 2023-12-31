@@ -8,6 +8,7 @@
    apt:
      name: 
      - prometheus-node-exporter
+     state: present
 
  - name: Start node exporter
    service:
