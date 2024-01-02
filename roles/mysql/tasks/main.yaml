@@ -24,7 +24,9 @@
     community.mysql.mysql_db:
       name: "{{ mysql_database }}"
       login_unix_socket: /var/run/mysqld/mysqld.sock 
-    no_log: True 
+    notify:
+      - Reset MySQL source
+      - Reset MySQL replica
 
   - name: Create User
     community.mysql.mysql_user:
@@ -122,3 +124,12 @@
       priv: "*.*:REPLICATION SLAVE"
       login_unix_socket: /var/run/mysqld/mysqld.sock
 
+  - name: read only mode for replica server, and remove it from source server
+    community.mysql.mysql_variables:
+      variable: read_only
+      value: "{{ 'OFF' if inventory_hostname == mysql_host else 'ON' }}"
+      mode: persist
+      login_unix_socket: /var/run/mysqld/mysqld.sock
+    notify:
+      - Reset MySQL source
+      - Reset MySQL replica
