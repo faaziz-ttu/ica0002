@@ -4,6 +4,13 @@
   roles:
     - init
     
+- name: Docker setup
+  hosts: docker
+  roles:
+    - docker
+  tags: 
+    - doc
+    
 - name: DNS server
   hosts: dns_servers
   roles:
@@ -44,4 +51,3 @@
   hosts: pinger
   roles:
     - pinger  
-
