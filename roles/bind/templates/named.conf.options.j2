@@ -1,3 +1,5 @@
+acl trusted { {{ local_network }}; {{ localhost }}; {{ docker_network }};  }; 
+
 options {
 	directory "/var/cache/bind";
 	forwarders {
@@ -5,7 +7,11 @@ options {
 	    {{ f }};
       {% endfor %}
 	};
-	allow-query { {{ localhost_address }}; {{ local_network }}; };
+	allow-query { trusted; };
 	dnssec-validation no;
 	auth-nxdomain no;
+};
+
+statistics-channels {
+           inet 127.0.0.1 port 8053 allow { 127.0.0.1; };
 };

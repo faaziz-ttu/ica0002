@@ -51,6 +51,14 @@ backup_password: !vault |
           6537
 mysql_backup_host: "{{ groups['db_servers'] | reject('eq', mysql_host) | first | default(mysql_host) }}"
 
+#AGAMA DOCKER
+docker_agama_port1: 8003
+docker_agama_port2: 8004
+agama_port: 8000
+agama_port1: 8000
+agama_containers: 2
+docker_network: 172.17.0.0/16
+
 dns_forwarders:
   - 8.8.8.8
   - 1.1.1.1

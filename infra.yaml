@@ -4,18 +4,24 @@
   roles:
     - init
     
-- name: Docker setup
-  hosts: docker
-  roles:
-    - docker
-  tags: 
-    - doc
-    
 - name: DNS server
   hosts: dns_servers
   roles:
     - bind
+
+- name: DNS setup
+  hosts: all
+  roles:
+    - dns_setup
+  tags:
+    - dns
     
+- name: Docker setup
+  hosts: all
+  roles:
+    - docker
+  tags: 
+    - doc
 #added resolv.conf to uwsgi templates to from lab 5
 
 - name: Database server
@@ -26,9 +32,15 @@
 - name: Web server
   hosts: web_servers
   roles:
-    - agama
-    - uwsgi
+#    - agama
+#    - uwsgi
     - nginx
+    
+- name: Agama
+  hosts: agama
+  roles:
+    - agama
+
 
 - name: Configure Prometheus
   hosts: prometheus

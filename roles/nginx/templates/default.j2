@@ -5,11 +5,11 @@ server {
 	server_name _;
 
 
-        location / {
-        	uwsgi_pass localhost:5000;
-		include uwsgi_params;
-		proxy_set_header Host $http_host;
-        }     
+#        location / {
+#        	uwsgi_pass localhost:5000;
+#		include uwsgi_params;
+#		proxy_set_header Host $http_host;
+#        }     
         
         {% if inventory_hostname in groups['prometheus'] %}
         #Reverse proxy for Prometheus
@@ -23,7 +23,7 @@ server {
         #Reverse proxy for node exporters
 
         location /metrics {
-		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['node']['port'] }}/metrics;
+		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['node']['port'] }};
 	}
         {% endif %}
 
@@ -31,7 +31,7 @@ server {
         #Reverse proxy for Nginx exporter
 
         location /nginx-metrics {
-                proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['nginx']['port'] }}/metrics;
+                proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['nginx']['port'] }};
         }
         {% endif %}
 
@@ -39,7 +39,7 @@ server {
         #Reverse proxy for MySQL exporter
 
         location /mysql-metrics {
-		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['mysql']['port'] }}/metrics;
+		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['mysql']['port'] }};
 	}
         {% endif %}
 
@@ -47,7 +47,7 @@ server {
         #Reverse proxy for Bind exporter
 
         location /bind-metrics {
-		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['bind']['port'] }}/metrics;
+		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['bind']['port'] }};
 	}
         {% endif %}
           
@@ -57,7 +57,15 @@ server {
         location /grafana {
         	proxy_pass http://{{localhost_address}}:3000;
         }
-        {% endif %}     
+        {% endif %}   
+        
+        {% if inventory_hostname in groups['agama'] %}
+    	location / {
+        	proxy_pass http://localhost:8001;
+        	proxy_set_header Host $http_host;
+        }
+	{% endif %}
+  
 }
 server 
 {
