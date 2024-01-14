@@ -63,3 +63,11 @@
   hosts: pinger
   roles:
     - pinger  
+
+- name: Keepalived and Haproxy
+  hosts: haproxy
+  roles:
+    - keepalived
+    - haproxy
+  tags:
+    - ha  

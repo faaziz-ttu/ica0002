@@ -1,0 +1,39 @@
+global_defs {
+      enable_script_security
+      script_user keepalived_script
+}
+
+vrrp_script check_haproxy {                 
+    script "/home/keepalived_script/vrrp_script" 
+    weight 20                              
+    interval 1               
+}
+
+vrrp_instance agama {             
+    interface ens3
+    virtual_router_id 13
+    {% if inventory_hostname in groups['keepalived_master'] %}
+    priority 100
+    {% else %}
+    priority 99
+    {% endif%}
+    advert_int 1                            
+    virtual_ipaddress {    
+      {% if (hostvars[groups['keepalived_master'][0]]['ansible_default_ipv4']['address'] | split('.'))[2] == "43" %}
+      {% set oct = 101 %}
+      {% else %}
+      {% set oct = 100 %}
+      {% endif %}                 
+      192.168.{{oct}}.{{ (hostvars[groups['keepalived_master'][0]]['ansible_default_ipv4']['address'] | split('.'))[3]}}/24                  
+    }
+    unicast_peer {                          
+      {% for vm in groups['haproxy'] %}
+      {% if inventory_hostname != vm %}
+        {{ hostvars[vm]['ansible_default_ipv4']['address']}} 
+      {% endif %}
+      {% endfor %}
+    }
+    track_script {
+        check_haproxy
+    }
+}

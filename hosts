@@ -1,5 +1,5 @@
-faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=45022 ansible_user=ubuntu
-faaziz-ttu-2 ansible_host=193.40.156.67 ansible_port=29322 ansible_user=ubuntu
+faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=14922 ansible_user=ubuntu
+faaziz-ttu-2 ansible_host=193.40.156.67 ansible_port=10822 ansible_user=ubuntu
 
 [db_servers]
 faaziz-ttu-1
@@ -10,7 +10,6 @@ faaziz-ttu-2
 
 [web_servers]
 faaziz-ttu-1
-
 
 #node_exporter
 [init]
@@ -32,4 +31,11 @@ faaziz-ttu-2
 faaziz-ttu-2
 
 [pinger]
+faaziz-ttu-2
+
+[keepalived_master]
+faaziz-ttu-1
+
+[haproxy]
+faaziz-ttu-1
 faaziz-ttu-2

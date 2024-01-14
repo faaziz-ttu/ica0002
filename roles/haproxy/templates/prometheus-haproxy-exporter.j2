@@ -1,0 +1,1 @@
+ARGS="--haproxy.scrape-uri='http://{{ inventory_hostname }}.{{ fqdn}}:{{ haproxy_stats_port }}/stats;csv' --web.listen-address=':{{prometheus_exporters['haproxy']['port']}}'"

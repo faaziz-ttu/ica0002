@@ -1,0 +1,63 @@
+- name: Install keepalived & keepalived_exporter
+  apt:
+    name: 
+      - keepalived 
+
+- name: Create user "keepalived_script"
+  user:
+    name: keepalived_script 
+    create_home: yes 
+    home: /home/keepalived_script
+  
+- name: keepalived.conf 
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+  notify: 
+  - Reload daemon
+  - Restart keepalived
+
+- name: vrrp_script
+  template:
+    src: vrrp_script.j2
+    dest: /home/keepalived_script/vrrp_script
+    mode: '0755'
+    owner: keepalived_script 
+    group: keepalived_script 
+  notify: 
+  - Reload daemon
+  - Restart keepalived
+
+- name: Install keepalived_exporter 
+  unarchive:
+    src: https://github.com/cafebazaar/keepalived-exporter/releases/download/v1.2.0/keepalived-exporter-1.2.0.linux-amd64.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: keepalived exporter service 
+  template:
+    src: keepalived_exporter.service
+    dest: /etc/systemd/system/keepalived_exporter.service
+  notify: 
+    - Reload daemon
+    - Restart keepalived
+    - Restart keepalived exporter
+  register: service
+
+- name: keepalived exporter args 
+  template:
+    src: keepalived_exporter.j2
+    dest: /etc/default/keepalived_exporter
+  notify: 
+    - Restart keepalived exporter
+  register: service
+
+
+- name: Enable keepalived and keepalived_exporter 
+  service:
+   name: "{{ item }}"
+   state: started
+   enabled: yes
+  loop:
+    - keepalived
+    - keepalived_exporter

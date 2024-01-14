@@ -104,9 +104,20 @@ prometheus_exporters:
        
   influxdb:
     port: 9424
+    
+  haproxy:
+    port: 9101
+    
+  keepalived:
+    port: 9165
 
 grafana_port: 3000
 docker_grafana_port: 3001
 
 
 node_id: "{{ (ansible_port / 100) | int }}"
+
+
+# Haproxy
+haproxy_port: 88
+haproxy_stats_port: 9188
