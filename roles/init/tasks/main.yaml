@@ -37,6 +37,7 @@
    service:
      name: rsyslog
      state: started
+     enabled: true
 #backup lab 9  
  - name: Add user backup 
    user:

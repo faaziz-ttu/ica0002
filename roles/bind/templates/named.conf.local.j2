@@ -1,29 +1,31 @@
 zone "{{ fqdn }}" {
-{% if inventory_hostname in groups ['dns_primary'] %}
+    {% if inventory_hostname in groups['dns_primary'] %}
     type master;
-    allow-update {key nsupdate.key;};
-    allow-transfer {127.0.0.1; key transfer.key;};
-{% else %}
+    file "db.{{ fqdn }}";
+    allow-transfer { key transfer.key; };
+    allow-update { key nsupdate.key; };
+    {% else %}
     type slave;
-    masters { {{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}; }; 
-{% endif %}
-    file "db.fetirix.io";
+    masters { {{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}; };
+    file "db.{{ fqdn }}";
+    {% endif %}
 };
 
-{% if inventory_hostname in groups ['dns_secondary'] %}
+zone "168.192.in-addr.arpa" {
+    {% if inventory_hostname in groups['dns_primary'] %}
+    type master;
+    file "rev.db";
+    allow-transfer { key transfer.key; };
+    allow-update { key nsupdate.key; };
+    {% else %}
+    type slave;
+    masters { {{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}; };
+    file "rev.db";
+    {% endif %}
+};
+
+{% if inventory_hostname in groups['dns_secondary'] %}
 server {{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }} {
     keys { transfer.key; };
 };
 {% endif %}
-
-zone {{ reverse_domain }} {
-{% if inventory_hostname in groups ['dns_primary'] %}
-    type master;
-    allow-update {key nsupdate.key;};
-    allow-transfer {127.0.0.1; key transfer.key;};
-{% else %}
-    type slave;
-    masters { {{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}; }; 
-{% endif %}
-    file "db.faaziz";
-};

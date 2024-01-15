@@ -67,8 +67,6 @@
       login_unix_socket: /var/run/mysqld/mysqld.sock
     no_log: true
 
-  - name: Force all notified handlers
-    meta: flush_handlers
   
   - name: Start mysql exporter
     service:
@@ -97,14 +95,13 @@
       src: my2.cnf.j2
       dest: /home/backup/.my.cnf
       owner: backup
-      mode: '0400'
+      mode: '0600'
 
   - name: Make cron backup
     template:
       src: back.conf
       dest: /etc/cron.d/mysql-backup
-      mode: '0400'
-      owner: root
+
 
 # lab 11 
 
@@ -123,6 +120,7 @@
       password: "{{ replication_password }}"
       priv: "*.*:REPLICATION SLAVE"
       login_unix_socket: /var/run/mysqld/mysqld.sock
+      host: "%"
 
   - name: read only mode for replica server, and remove it from source server
     community.mysql.mysql_variables:

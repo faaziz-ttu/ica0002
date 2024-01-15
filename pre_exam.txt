@@ -1,0 +1,1438 @@
+Mon Jan 15 01:01:52 PM EST 2024
++ hostname
+kali
++ ansible-playbook infra.yaml --diff
+
+PLAY [Init] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Update APT cache] *************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install node exporter] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Start node exporter] **********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install up-to-date CA certificates] *******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install Rsyslog] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Reconfigure Rsyslog] **********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Start Rsyslog] ****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Add user backup] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Generate SSH keypair for user backup] *****************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Template] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Make Backup owner for init] ***************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Duplicity] ********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [DNS server] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Install bind] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Start service bind9, if not started] ******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure options.j2] *********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure local.j2] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure db.rev.j2] **********************************************
+skipping: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [bind : Configure fetirix.io.j2] ******************************************
+skipping: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [bind : Bind9 exporter] ***************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Start Bind9 exporter] *********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : execute handlers] *************************************************
+
+TASK [bind : Create A records] *************************************************
+skipping: [faaziz-ttu-2] => (item={'subdomain': 'backup', 'ip': '192.168.42.132'}) 
+ok: [faaziz-ttu-1] => (item={'subdomain': 'backup', 'ip': '192.168.42.132'})
+
+TASK [bind : Create CNAME records] *********************************************
+skipping: [faaziz-ttu-2] => (item={'key': 'grafana', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'influxdb', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'lb1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'lb2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'mysql1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'mysql2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'ns1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'ns2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'prometheus', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'web1', 'value': 'faaziz-ttu-1'}) 
+ok: [faaziz-ttu-1] => (item={'key': 'grafana', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'influxdb', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'lb1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'lb2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'mysql1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'mysql2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'ns1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'ns2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'prometheus', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'web1', 'value': 'faaziz-ttu-1'})
+
+PLAY [DNS setup] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [dns_setup : update DNS on  VM] *******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [dns_setup : Stop systemd-resolved service] *******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Docker setup] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [docker : Install docker.io and python3-docker] ***************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [docker : Start + Enable Docker] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Database server] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install mysql-server] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install Pymsql] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Copying and restarting mysql] ************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Start mysql] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create Database] *************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create User] *****************************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [mysql : Install MySQL exporter and python3-pymysql] **********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create directory] ************************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [mysql : Configure MySQL exporter] ****************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create MySQL exporter user] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Start mysql exporter] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make Backup owner of MySQL DIR] **********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : MySQL backup user] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make Backup Template] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make cron backup] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Template mysql exporter replication metrics] *********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : MySQL replication user] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : read only mode for replica server, and remove it from source server] ***
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Web server] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : install nginx] ***************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : copy default] ****************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : enable nginx service] ********************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : enable nginx exporter on boot up] ********************************
+ok: [faaziz-ttu-1]
+
+PLAY [Agama] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Create directory agama] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Install agama stuff] *********************************************
+ok: [faaziz-ttu-1] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/agama.py)
+ok: [faaziz-ttu-2] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/agama.py)
+ok: [faaziz-ttu-1] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile)
+ok: [faaziz-ttu-2] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile)
+
+TASK [agama : Build agama docker image] ****************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Run agama docker container] **************************************
+ok: [faaziz-ttu-1] => (item=1)
+ok: [faaziz-ttu-2] => (item=1)
+ok: [faaziz-ttu-1] => (item=2)
+ok: [faaziz-ttu-2] => (item=2)
+
+PLAY [Configure Prometheus] ****************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Install Prometheus] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Configure Prometheus] ***************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Configure Prometheus' web path] *****************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : start prometheus] *******************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : install nginx] ***************************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : copy default] ****************************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : enable nginx service] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : enable nginx exporter on boot up] ********************************
+ok: [faaziz-ttu-2]
+
+PLAY [Grafana] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [grafana : Provisioning config - Create directories] **********************
+ok: [faaziz-ttu-2] => (item={'directory': 'dashboards'})
+ok: [faaziz-ttu-2] => (item={'directory': 'datasources'})
+
+TASK [grafana : Template grafana.ini] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [grafana : Template files] ************************************************
+ok: [faaziz-ttu-2] => (item={'directory': 'dashboards', 'file': 'default.yaml', 'srcfile': 'dashboard.yaml.j2'})
+ok: [faaziz-ttu-2] => (item={'directory': 'datasources', 'file': 'default.yaml', 'srcfile': 'datasource.yaml.j2'})
+
+TASK [grafana : Copy files] ****************************************************
+ok: [faaziz-ttu-2] => (item=main.json)
+ok: [faaziz-ttu-2] => (item=mysql.json)
+ok: [faaziz-ttu-2] => (item=syslog.json)
+
+TASK [grafana : Start Grafana in docker container] *****************************
+ok: [faaziz-ttu-2]
+
+PLAY [Influxdb] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Get InfluxDB file] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install InfluxDB] *********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Configure InfluxDB] *******************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Start Influx service] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Download Telegraf package] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install Telegraf] *********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Reconfigure Telegraf] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Make sure Telegraf is running] ********************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install InfluxDB stat exporter from git] **********************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Import Influxdb Stat Expo Template] ***************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Start explorer on boot up] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Make Backup owner of influxdb] ********************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to backup Influx] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to full backup server] *******************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to incremental backup server] ************************
+ok: [faaziz-ttu-2]
+
+PLAY [Pinger] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Add the user "pinger"] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Install fping] **************************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger configuration directory] **************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger configuration] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Setup pinger script] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger service] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Start pinger on boot uo] ****************************************
+ok: [faaziz-ttu-2]
+
+PLAY [Keepalived and Haproxy] **************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Install keepalived & keepalived_exporter] *******************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Create user "keepalived_script"] ****************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : keepalived.conf] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : vrrp_script] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Install keepalived_exporter] ********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : keepalived exporter service] ********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : keepalived exporter args] ***********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Enable keepalived and keepalived_exporter] ******************
+ok: [faaziz-ttu-1] => (item=keepalived)
+ok: [faaziz-ttu-2] => (item=keepalived)
+ok: [faaziz-ttu-1] => (item=keepalived_exporter)
+ok: [faaziz-ttu-2] => (item=keepalived_exporter)
+
+TASK [haproxy : Install haproxy] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : /etc/haproxy/haproxy.cfg] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : Haproxy started] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : prometheus-haproxy-exporter] ***********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : /etc/default/prometheus-haproxy-exporter] **********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : Haproxy exporter started] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY RECAP *********************************************************************
+faaziz-ttu-1               : ok=75   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+faaziz-ttu-2               : ok=105  changed=0    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+
++ ansible-playbook infra.yaml --diff
+
+PLAY [Init] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Update APT cache] *************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install node exporter] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Start node exporter] **********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install up-to-date CA certificates] *******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install Rsyslog] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Reconfigure Rsyslog] **********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Start Rsyslog] ****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Add user backup] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Generate SSH keypair for user backup] *****************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Template] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Make Backup owner for init] ***************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Duplicity] ********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [DNS server] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Install bind] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Start service bind9, if not started] ******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure options.j2] *********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure local.j2] ***********************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [bind : Configure db.rev.j2] **********************************************
+skipping: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [bind : Configure fetirix.io.j2] ******************************************
+skipping: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [bind : Bind9 exporter] ***************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Start Bind9 exporter] *********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : execute handlers] *************************************************
+
+TASK [bind : Create A records] *************************************************
+skipping: [faaziz-ttu-2] => (item={'subdomain': 'backup', 'ip': '192.168.42.132'}) 
+ok: [faaziz-ttu-1] => (item={'subdomain': 'backup', 'ip': '192.168.42.132'})
+
+TASK [bind : Create CNAME records] *********************************************
+skipping: [faaziz-ttu-2] => (item={'key': 'grafana', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'influxdb', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'lb1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'lb2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'mysql1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'mysql2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'ns1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'ns2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'prometheus', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'web1', 'value': 'faaziz-ttu-1'}) 
+ok: [faaziz-ttu-1] => (item={'key': 'grafana', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'influxdb', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'lb1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'lb2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'mysql1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'mysql2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'ns1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'ns2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'prometheus', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'web1', 'value': 'faaziz-ttu-1'})
+
+PLAY [DNS setup] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [dns_setup : update DNS on  VM] *******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [dns_setup : Stop systemd-resolved service] *******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Docker setup] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [docker : Install docker.io and python3-docker] ***************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [docker : Start + Enable Docker] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Database server] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install mysql-server] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install Pymsql] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Copying and restarting mysql] ************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Start mysql] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create Database] *************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create User] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install MySQL exporter and python3-pymysql] **********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create directory] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Configure MySQL exporter] ****************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create MySQL exporter user] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Start mysql exporter] ********************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [mysql : Make Backup owner of MySQL DIR] **********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : MySQL backup user] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make Backup Template] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make cron backup] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Template mysql exporter replication metrics] *********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : MySQL replication user] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : read only mode for replica server, and remove it from source server] ***
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+PLAY [Web server] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : install nginx] ***************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : copy default] ****************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : enable nginx service] ********************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : enable nginx exporter on boot up] ********************************
+ok: [faaziz-ttu-1]
+
+PLAY [Agama] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Create directory agama] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Install agama stuff] *********************************************
+ok: [faaziz-ttu-1] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/agama.py)
+ok: [faaziz-ttu-2] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/agama.py)
+ok: [faaziz-ttu-1] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile)
+ok: [faaziz-ttu-2] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile)
+
+TASK [agama : Build agama docker image] ****************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Run agama docker container] **************************************
+ok: [faaziz-ttu-1] => (item=1)
+ok: [faaziz-ttu-2] => (item=1)
+ok: [faaziz-ttu-1] => (item=2)
+ok: [faaziz-ttu-2] => (item=2)
+
+PLAY [Configure Prometheus] ****************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Install Prometheus] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Configure Prometheus] ***************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Configure Prometheus' web path] *****************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : start prometheus] *******************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : install nginx] ***************************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : copy default] ****************************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : enable nginx service] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : enable nginx exporter on boot up] ********************************
+ok: [faaziz-ttu-2]
+
+PLAY [Grafana] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [grafana : Provisioning config - Create directories] **********************
+ok: [faaziz-ttu-2] => (item={'directory': 'dashboards'})
+ok: [faaziz-ttu-2] => (item={'directory': 'datasources'})
+
+TASK [grafana : Template grafana.ini] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [grafana : Template files] ************************************************
+ok: [faaziz-ttu-2] => (item={'directory': 'dashboards', 'file': 'default.yaml', 'srcfile': 'dashboard.yaml.j2'})
+ok: [faaziz-ttu-2] => (item={'directory': 'datasources', 'file': 'default.yaml', 'srcfile': 'datasource.yaml.j2'})
+
+TASK [grafana : Copy files] ****************************************************
+ok: [faaziz-ttu-2] => (item=main.json)
+ok: [faaziz-ttu-2] => (item=mysql.json)
+ok: [faaziz-ttu-2] => (item=syslog.json)
+
+TASK [grafana : Start Grafana in docker container] *****************************
+ok: [faaziz-ttu-2]
+
+PLAY [Influxdb] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Get InfluxDB file] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install InfluxDB] *********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Configure InfluxDB] *******************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Start Influx service] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Download Telegraf package] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install Telegraf] *********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Reconfigure Telegraf] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Make sure Telegraf is running] ********************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install InfluxDB stat exporter from git] **********************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Import Influxdb Stat Expo Template] ***************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Start explorer on boot up] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Make Backup owner of influxdb] ********************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to backup Influx] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to full backup server] *******************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to incremental backup server] ************************
+ok: [faaziz-ttu-2]
+
+PLAY [Pinger] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Add the user "pinger"] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Install fping] **************************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger configuration directory] **************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger configuration] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Setup pinger script] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger service] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Start pinger on boot uo] ****************************************
+ok: [faaziz-ttu-2]
+
+PLAY [Keepalived and Haproxy] **************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Install keepalived & keepalived_exporter] *******************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Create user "keepalived_script"] ****************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : keepalived.conf] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : vrrp_script] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Install keepalived_exporter] ********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : keepalived exporter service] ********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : keepalived exporter args] ***********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Enable keepalived and keepalived_exporter] ******************
+ok: [faaziz-ttu-1] => (item=keepalived)
+ok: [faaziz-ttu-2] => (item=keepalived)
+ok: [faaziz-ttu-1] => (item=keepalived_exporter)
+ok: [faaziz-ttu-2] => (item=keepalived_exporter)
+
+TASK [haproxy : Install haproxy] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : /etc/haproxy/haproxy.cfg] **************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [haproxy : Haproxy started] ***********************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [haproxy : prometheus-haproxy-exporter] ***********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : /etc/default/prometheus-haproxy-exporter] **********************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [haproxy : Haproxy exporter started] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY RECAP *********************************************************************
+faaziz-ttu-1               : ok=75   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+faaziz-ttu-2               : ok=105  changed=0    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+
++ ansible all -b -m reboot -a test_command=uptime
+faaziz-ttu-2 | CHANGED => {
+    "changed": true,
+    "elapsed": 53,
+    "rebooted": true
+}
+faaziz-ttu-1 | CHANGED => {
+    "changed": true,
+    "elapsed": 58,
+    "rebooted": true
+}
++ ansible-playbook infra.yaml --diff
+
+PLAY [Init] ********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Update APT cache] *************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install node exporter] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Start node exporter] **********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install up-to-date CA certificates] *******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Install Rsyslog] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Reconfigure Rsyslog] **********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Start Rsyslog] ****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Add user backup] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Generate SSH keypair for user backup] *****************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Template] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [init : Make Backup owner for init] ***************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [init : Duplicity] ********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [DNS server] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Install bind] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Start service bind9, if not started] ******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure options.j2] *********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure local.j2] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Configure db.rev.j2] **********************************************
+skipping: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [bind : Configure fetirix.io.j2] ******************************************
+skipping: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [bind : Bind9 exporter] ***************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : Start Bind9 exporter] *********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [bind : execute handlers] *************************************************
+
+TASK [bind : Create A records] *************************************************
+skipping: [faaziz-ttu-2] => (item={'subdomain': 'backup', 'ip': '192.168.42.132'}) 
+ok: [faaziz-ttu-1] => (item={'subdomain': 'backup', 'ip': '192.168.42.132'})
+
+TASK [bind : Create CNAME records] *********************************************
+skipping: [faaziz-ttu-2] => (item={'key': 'grafana', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'influxdb', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'lb1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'lb2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'mysql1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'mysql2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'ns1', 'value': 'faaziz-ttu-1'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'ns2', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'prometheus', 'value': 'faaziz-ttu-2'}) 
+skipping: [faaziz-ttu-2] => (item={'key': 'web1', 'value': 'faaziz-ttu-1'}) 
+ok: [faaziz-ttu-1] => (item={'key': 'grafana', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'influxdb', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'lb1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'lb2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'mysql1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'mysql2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'ns1', 'value': 'faaziz-ttu-1'})
+ok: [faaziz-ttu-1] => (item={'key': 'ns2', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'prometheus', 'value': 'faaziz-ttu-2'})
+ok: [faaziz-ttu-1] => (item={'key': 'web1', 'value': 'faaziz-ttu-1'})
+
+PLAY [DNS setup] ***************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [dns_setup : update DNS on  VM] *******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [dns_setup : Stop systemd-resolved service] *******************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Docker setup] ************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [docker : Install docker.io and python3-docker] ***************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [docker : Start + Enable Docker] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Database server] *********************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install mysql-server] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install Pymsql] **************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Copying and restarting mysql] ************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Start mysql] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create Database] *************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create User] *****************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Install MySQL exporter and python3-pymysql] **********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create directory] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Configure MySQL exporter] ****************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Create MySQL exporter user] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Start mysql exporter] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make Backup owner of MySQL DIR] **********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : MySQL backup user] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make Backup Template] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Make cron backup] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : Template mysql exporter replication metrics] *********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : MySQL replication user] ******************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [mysql : read only mode for replica server, and remove it from source server] ***
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY [Web server] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : install nginx] ***************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : copy default] ****************************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : enable nginx service] ********************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [faaziz-ttu-1]
+
+TASK [nginx : enable nginx exporter on boot up] ********************************
+ok: [faaziz-ttu-1]
+
+PLAY [Agama] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Create directory agama] ******************************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [agama : Install agama stuff] *********************************************
+ok: [faaziz-ttu-2] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/agama.py)
+ok: [faaziz-ttu-1] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/agama.py)
+ok: [faaziz-ttu-2] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile)
+ok: [faaziz-ttu-1] => (item=https://raw.githubusercontent.com/hudolejev/agama/master/Dockerfile)
+
+TASK [agama : Build agama docker image] ****************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [agama : Run agama docker container] **************************************
+ok: [faaziz-ttu-1] => (item=1)
+ok: [faaziz-ttu-2] => (item=1)
+ok: [faaziz-ttu-1] => (item=2)
+ok: [faaziz-ttu-2] => (item=2)
+
+PLAY [Configure Prometheus] ****************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Install Prometheus] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Configure Prometheus] ***************************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : Configure Prometheus' web path] *****************************
+ok: [faaziz-ttu-2]
+
+TASK [prometheus : start prometheus] *******************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : install nginx] ***************************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : copy default] ****************************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : enable nginx service] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : install nginx exporter] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [nginx : enable nginx exporter on boot up] ********************************
+ok: [faaziz-ttu-2]
+
+PLAY [Grafana] *****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [grafana : Provisioning config - Create directories] **********************
+ok: [faaziz-ttu-2] => (item={'directory': 'dashboards'})
+ok: [faaziz-ttu-2] => (item={'directory': 'datasources'})
+
+TASK [grafana : Template grafana.ini] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [grafana : Template files] ************************************************
+ok: [faaziz-ttu-2] => (item={'directory': 'dashboards', 'file': 'default.yaml', 'srcfile': 'dashboard.yaml.j2'})
+ok: [faaziz-ttu-2] => (item={'directory': 'datasources', 'file': 'default.yaml', 'srcfile': 'datasource.yaml.j2'})
+
+TASK [grafana : Copy files] ****************************************************
+ok: [faaziz-ttu-2] => (item=main.json)
+ok: [faaziz-ttu-2] => (item=mysql.json)
+ok: [faaziz-ttu-2] => (item=syslog.json)
+
+TASK [grafana : Start Grafana in docker container] *****************************
+ok: [faaziz-ttu-2]
+
+PLAY [Influxdb] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Get InfluxDB file] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install InfluxDB] *********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Configure InfluxDB] *******************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Start Influx service] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Download Telegraf package] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install Telegraf] *********************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Reconfigure Telegraf] *****************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Make sure Telegraf is running] ********************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Install InfluxDB stat exporter from git] **********************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Import Influxdb Stat Expo Template] ***************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Start explorer on boot up] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Make Backup owner of influxdb] ********************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to backup Influx] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to full backup server] *******************************
+ok: [faaziz-ttu-2]
+
+TASK [influxdb : Cron job to incremental backup server] ************************
+ok: [faaziz-ttu-2]
+
+PLAY [Pinger] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Add the user "pinger"] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Install fping] **************************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger configuration directory] **************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger configuration] ************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Setup pinger script] ********************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Create pinger service] ******************************************
+ok: [faaziz-ttu-2]
+
+TASK [pinger : Start pinger on boot uo] ****************************************
+ok: [faaziz-ttu-2]
+
+PLAY [Keepalived and Haproxy] **************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Install keepalived & keepalived_exporter] *******************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Create user "keepalived_script"] ****************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [keepalived : keepalived.conf] ********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : vrrp_script] ************************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Install keepalived_exporter] ********************************
+ok: [faaziz-ttu-2]
+ok: [faaziz-ttu-1]
+
+TASK [keepalived : keepalived exporter service] ********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : keepalived exporter args] ***********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [keepalived : Enable keepalived and keepalived_exporter] ******************
+ok: [faaziz-ttu-1] => (item=keepalived)
+ok: [faaziz-ttu-2] => (item=keepalived)
+ok: [faaziz-ttu-1] => (item=keepalived_exporter)
+ok: [faaziz-ttu-2] => (item=keepalived_exporter)
+
+TASK [haproxy : Install haproxy] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : /etc/haproxy/haproxy.cfg] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : Haproxy started] ***********************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : prometheus-haproxy-exporter] ***********************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : /etc/default/prometheus-haproxy-exporter] **********************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+TASK [haproxy : Haproxy exporter started] **************************************
+ok: [faaziz-ttu-1]
+ok: [faaziz-ttu-2]
+
+PLAY RECAP *********************************************************************
+faaziz-ttu-1               : ok=75   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+faaziz-ttu-2               : ok=105  changed=0    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+
++ date
+Mon Jan 15 01:10:26 PM EST 2024

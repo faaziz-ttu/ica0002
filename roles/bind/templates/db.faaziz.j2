@@ -1,4 +1,5 @@
 $TTL	604800
+
 {% for vm in groups['dns_primary'] %}
 {{ reverse_domain }}.  IN	SOA	   {{ vm }}.{{ fqdn }}. farid.{{ fqdn }}. (
 			               5	   ; Serial
@@ -14,5 +15,5 @@ $TTL	604800
 {% endfor %}
 
 {% for vm in groups['all'] %}
-{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }} IN PTR {{ vm }}.{{ fqdn }}.
+{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }}.{{ (hostvars[vm]['ansible_default_ipv4']['address']|split('.'))[2] }} IN PTR {{ vm }}.{{ fqdn }}.
 {% endfor %}

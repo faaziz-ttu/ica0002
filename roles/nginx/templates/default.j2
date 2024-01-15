@@ -3,60 +3,23 @@ server {
         listen [::]:80 default_server;
 
 	server_name _;
-
-
-#        location / {
-#        	uwsgi_pass localhost:5000;
-#		include uwsgi_params;
-#		proxy_set_header Host $http_host;
-#        }     
+  
         
          
         {% if inventory_hostname in groups['prometheus'] %}
         #Reverse proxy for Prometheus
         
         location /prometheus {
-        	proxy_pass http://{{localhost_address}}:9090;
+        	proxy_pass http://localhost:9090;
         }
         {% endif %}  
         
-        {% if inventory_hostname in groups['init'] %}
-        #Reverse proxy for node exporters
-
-        location /metrics {
-		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['node']['port'] }};
-	}
-        {% endif %}
-
-        {% if inventory_hostname in groups['all'] %}
-        #Reverse proxy for Nginx exporter
-
-        location /nginx-metrics {
-                proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['nginx']['port'] }};
-        }
-        {% endif %}
-
-        {% if inventory_hostname in groups['db_servers'] %}
-        #Reverse proxy for MySQL exporter
-
-        location /mysql-metrics {
-		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['mysql']['port'] }};
-	}
-        {% endif %}
-
-        {% if inventory_hostname in groups['dns_servers'] %}
-        #Reverse proxy for Bind exporter
-
-        location /bind-metrics {
-		proxy_pass http://{{localhost_address}}:{{ prometheus_exporters['bind']['port'] }};
-	}
-        {% endif %}
           
         {% if inventory_hostname in groups['grafana'] %}
         #Reverse proxy for Grafana
         
         location /grafana {
-        	proxy_pass http://{{localhost_address}}:3000;
+        	proxy_pass http://localhost:3000;
         	proxy_set_header Host $http_host;
         }
         {% endif %}   

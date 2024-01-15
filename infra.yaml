@@ -3,10 +3,12 @@
   hosts: init
   roles:
     - init
-    
+
 - name: DNS server
   hosts: dns_servers
   roles:
+    - bind
+  tags:
     - bind
 
 - name: DNS setup
@@ -15,7 +17,7 @@
     - dns_setup
   tags:
     - dns
-    
+
 - name: Docker setup
   hosts: all
   roles:

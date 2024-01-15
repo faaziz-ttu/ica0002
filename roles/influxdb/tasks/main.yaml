@@ -21,6 +21,7 @@
    service:
      name: influxdb
      state: started
+     enabled: true
 
 - name: Download Telegraf package
   get_url:
@@ -42,7 +43,8 @@
   service:
     name: telegraf
     state: started
-    
+    enabled: true
+
 - name: Install InfluxDB stat exporter from git
   get_url:
     url: https://github.com/carlpett/influxdb_stats_exporter/releases/download/v0.1.1/influx_stats_exporter_linux_amd64
@@ -54,7 +56,6 @@
   template:
     src: exporter.service.j2
     dest: /etc/systemd/system/prometheus-influxdb-stats-exporter.service
-    mode: '0644'
   notify: Restart systemd
 
 - name: Start explorer on boot up
@@ -70,7 +71,6 @@
     path: /home/backup/influxdb
     state: directory
     owner: backup
-    mode: '0744'
 
 - name: Cron job to backup Influx
   cron:
@@ -88,7 +88,7 @@
     job: " duplicity --no-encryption full /home/backup/influxdb/ rsync://{{user}}@backup.{{fqdn}}/influxdb"
     user: backup
     cron_file: influxdb-backup
-    weekday: "1-5"
+    weekday: "0"
     hour: "12"
     minute: "0"
 
@@ -98,7 +98,7 @@
     job: " duplicity --no-encryption incremental /home/backup/influxdb/ rsync://{{user}}@backup.{{fqdn}}/influxdb"
     user: backup
     cron_file: influxdb-backup
-    weekday: "1-5"
+    weekday: "1-6"
     hour: "12"
-    minute: "0"    
+    minute: "15"    
 

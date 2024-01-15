@@ -32,16 +32,18 @@
   template:
     src: db.faaziz.j2
     dest: /var/cache/bind/rev.db
-    force: yes
-
+    force: no
+  when: inventory_hostname in groups ['dns_primary']
 
 - name: Configure fetirix.io.j2
   template:
     src: db.fetirix.j2
     dest: /var/cache/bind/db.{{ fqdn }}
+    force: no
   notify:
     - Restart bind
     - Reload rndc
+  when: inventory_hostname in groups ['dns_primary']
 
 - name: Bind9 exporter
   apt:
@@ -58,7 +60,6 @@
   meta: flush_handlers
 
 
-
 - name: Create A records
   community.general.nsupdate:
     key_name: "nsupdate.key"
@@ -70,12 +71,20 @@
     type: "A"
     value: "{{ item['ip'] }}"
   loop: "{{ a_records }}"
-  run_once: True
   when: inventory_hostname in groups ['dns_primary']
 
-- name: Loop over dns_cname_records
-  debug:
-    msg: "Key: {{ item.key }}, Value: {{ item.value }}"
+- name: Create CNAME records
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ dns_nsupdate_key }}"
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    zone: "{{ fqdn }}"
+    record: "{{ item.key }}"
+    type: "CNAME"
+    value: "{{ item.value }}"
   loop: "{{ dns_cname_records | dict2items }}"
+  when: inventory_hostname in groups ['dns_primary']
+
 
 

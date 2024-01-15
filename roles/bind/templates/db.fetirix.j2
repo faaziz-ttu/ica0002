@@ -1,18 +1,14 @@
 $TTL	604800
-{% for vm in groups['dns_primary'] %}
-{{ fqdn }}.	IN	SOA	{{ fqdn }}. farid.{{ fqdn }}. (
+{{ fqdn }}.	IN	SOA	{{ groups['dns_primary'][0] }}.{{ fqdn }}. farid.{{ fqdn }}. (
 			      2		; Serial
 			 604800		; Refresh
 			  86400		; Retry
 			2419200		; Expire
 			 604800 )	; Negative Cache TTL
 ;
+{% for vm in groups['dns_servers'] %}
+{{ fqdn }}.	IN	NS	{{ vm }}
 {% endfor %}
 {% for vm in groups['dns_servers'] %}
-{{ fqdn }}.	IN	NS	{{ vm }}.{{fqdn}}.
+{{ vm }}	IN	A	{{ hostvars[vm]['ansible_default_ipv4']['address'] }}
 {% endfor %}
-
-{% for vm in hostvars %}
-{{ hostvars[vm]['inventory_hostname'] }}	IN	A	{{ hostvars[vm]['ansible_default_ipv4']['address'] }}
-{% endfor %}
-{{backup_server}} IN A {{backup_address}}

@@ -1,18 +1,20 @@
+
 $TTL	604800
-{% for vm in groups['dns_primary'] %}
-{{ reverse_domain }}.  IN	SOA	   {{ vm }}.{{ fqdn }}. farid.{{ fqdn }}. (
-			               5	   ; Serial
-			          604800	   ; Refresh
-			           86400	   ; Retry
-			         2419200	   ; Expire
-			          604800 	   ; Negative Cache TTL
-);
-{% endfor %}
-
+168.192.in-addr.arpa.	IN	SOA	{{ groups['dns_primary'][0] }}.{{ fqdn }}. farid.{{ fqdn }}. (
+			      2		; Serial
+			 604800		; Refresh
+			  86400		; Retry
+			2419200		; Expire
+			 604800 )	; Negative Cache TTL
+;
 {% for vm in groups['dns_servers'] %}
-{{ reverse_domain }}.	IN	    NS	   {{ vm }}.{{ fqdn }}.
+168.192.in-addr.arpa.	IN	NS	{{ vm }}.{{ fqdn }}.
+{% endfor %}
+{% for vm in groups['dns_servers'] %}
+{{ vm }}	IN	A	{{ hostvars[vm]['ansible_default_ipv4']['address'] }}
+{% endfor %}
+{% for vm in groups['dns_servers'] %}
+{{ (hostvars[vm]['ansible_default_ipv4']['address']|split('.'))[3] }}.{{ (hostvars[vm]['ansible_default_ipv4']['address']|split('.'))[2] }}	IN	PTR {{ vm }}.{{ fqdn }}.
 {% endfor %}
 
-{% for vm in groups['all'] %}
-{{ hostvars[vm]['ansible_default_ipv4']['address'].split('.')[3] }} IN PTR {{ vm }}.{{ fqdn }}.
-{% endfor %}
+

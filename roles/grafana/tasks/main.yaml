@@ -41,15 +41,4 @@
     volumes: /opt/grafana:/etc/grafana
     ports: "{{ grafana_port }}:3000"
     state: started
-
-- name: Create CNAME record for Grafana
-  community.general.nsupdate:
-    key_name: "nsupdate.key"
-    key_algorithm: "hmac-sha256"
-    key_secret: "{{ dns_nsupdate_key }}"
-    server: "localhost"
-    zone: "{{ fqdn }}"
-    record: "grafana"
-    type: "CNAME"
-    value: "{{ ansible_hostname }}"
-  when: inventory_hostname in groups['dns_primary']
+    restart_policy: "always"
