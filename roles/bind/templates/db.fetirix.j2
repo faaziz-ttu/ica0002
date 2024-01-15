@@ -1,4 +1,5 @@
 $TTL	604800
+{% for vm in groups['dns_primary'] %}
 {{ fqdn }}.	IN	SOA	{{ fqdn }}. farid.{{ fqdn }}. (
 			      2		; Serial
 			 604800		; Refresh
@@ -6,7 +7,7 @@ $TTL	604800
 			2419200		; Expire
 			 604800 )	; Negative Cache TTL
 ;
-
+{% endfor %}
 {% for vm in groups['dns_servers'] %}
 {{ fqdn }}.	IN	NS	{{ vm }}.{{fqdn}}.
 {% endfor %}

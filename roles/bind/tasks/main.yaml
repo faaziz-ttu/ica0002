@@ -1,5 +1,5 @@
 - name: Install bind
-  ansible.builtin.apt:
+  apt:
     name: 
       - bind9
       - python3-dnspython 
@@ -7,36 +7,41 @@
     state: latest   
 
 - name: Start service bind9, if not started
-  ansible.builtin.service:
+  service:
     name: bind9
     state: started
     enabled: yes
 
 - name: Configure options.j2
   template:
-    src: templates/named.conf.options.j2
+    src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind
 
+
+
 - name: Configure local.j2
   template:
-    src: templates/named.conf.local.j2
+    src: named.conf.local.j2
     dest: /etc/bind/named.conf.local     
   notify: Restart bind
 
+
+
+- name: Configure db.rev.j2
+  template:
+    src: db.faaziz.j2
+    dest: /var/cache/bind/rev.db
+    force: yes
+
+
 - name: Configure fetirix.io.j2
   template:
-    src: templates/db.fetirix.j2
-    dest: /var/lib/bind/db.fetirix.io
-  notify: Reload rndc
-
-- name: Copy resolv.conf
-  template:
-    src: templates/resolv.conf
-    dest: /etc/resolv.conf
-  notify: 
-      - Restart bind 
-      - Reload rndc
+    src: db.fetirix.j2
+    dest: /var/cache/bind/db.{{ fqdn }}
+  notify:
+    - Restart bind
+    - Reload rndc
 
 - name: Bind9 exporter
   apt:
@@ -48,3 +53,29 @@
     name: prometheus-bind-exporter
     state: started
     enabled: yes
+    
+- name: execute handlers
+  meta: flush_handlers
+
+
+
+- name: Create A records
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ dns_nsupdate_key}}"
+    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    zone: "{{ fqdn }}."
+    record: "{{ item['subdomain'] }}.{{ fqdn }}."
+    type: "A"
+    value: "{{ item['ip'] }}"
+  loop: "{{ a_records }}"
+  run_once: True
+  when: inventory_hostname in groups ['dns_primary']
+
+- name: Loop over dns_cname_records
+  debug:
+    msg: "Key: {{ item.key }}, Value: {{ item.value }}"
+  loop: "{{ dns_cname_records | dict2items }}"
+
+

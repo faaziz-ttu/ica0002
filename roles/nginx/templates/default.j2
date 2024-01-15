@@ -11,6 +11,7 @@ server {
 #		proxy_set_header Host $http_host;
 #        }     
         
+         
         {% if inventory_hostname in groups['prometheus'] %}
         #Reverse proxy for Prometheus
         
