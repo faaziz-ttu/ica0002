@@ -78,8 +78,8 @@
     job: "rm -rf /home/backup/influxdb/*; influxd backup -portable /home/backup/influxdb"
     user: backup
     cron_file: influxdb-backup
-    weekday: "1-5"
-    hour: "12"
+    weekday: "*"
+    hour: "2"
     minute: "0"
 
 - name: Cron job to full backup server
@@ -89,8 +89,8 @@
     user: backup
     cron_file: influxdb-backup
     weekday: "0"
-    hour: "12"
-    minute: "0"
+    hour: "2"
+    minute: "2"
 
 - name: Cron job to incremental backup server
   cron:
@@ -99,8 +99,8 @@
     user: backup
     cron_file: influxdb-backup
     weekday: "1-6"
-    hour: "12"
-    minute: "15"    
+    hour: "2"
+    minute: "2"    
 
 - name: Add Influx CNAME records
   community.general.nsupdate:
