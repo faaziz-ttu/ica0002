@@ -6,12 +6,6 @@
       - prometheus-bind-exporter
     state: latest   
 
-- name: Start service bind9, if not started
-  service:
-    name: bind9
-    state: started
-    enabled: yes
-
 - name: Configure options.j2
   template:
     src: named.conf.options.j2
@@ -59,6 +53,11 @@
 - name: execute handlers
   meta: flush_handlers
 
+- name: Start service bind9, if not started
+  service:
+    name: bind9
+    state: started
+    enabled: yes
 
 - name: Add A server records
   community.general.nsupdate:
@@ -72,7 +71,7 @@
     value: "{{ item.value }}"
   loop: "{{ dns_a_records | dict2items }}"
   when: inventory_hostname in groups['dns_primary']
-  no_log: yes
+
 
 - name: Add DNS CNAME records
   community.general.nsupdate:
@@ -86,6 +85,5 @@
     value: "{{ item.value }}"
   loop: "{{ dns_dns_records | dict2items }}"
   delegate_to: "{{ groups['dns_primary'][0] }}"
-  no_log: yes
 
 

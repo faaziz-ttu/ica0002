@@ -45,7 +45,7 @@ scrape_configs:
     static_configs:
       - targets:
 {% for vm in groups['all'] %}
-        - {{ vm }}:{{ prometheus_exporters['nginx']['port'] }}
+        - web{{ vm | replace("faaziz-ttu", "") }}:{{ prometheus_exporters['nginx']['port'] }}
 {% endfor %}
 
   - job_name: influxdb

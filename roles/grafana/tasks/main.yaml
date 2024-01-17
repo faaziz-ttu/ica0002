@@ -10,7 +10,7 @@
   template:
     dest: /opt/grafana/grafana.ini
     src: grafana.ini.j2
-    mode: '0644'
+    mode: "0700"
   notify: Restart Grafana
   no_log: yes
 
