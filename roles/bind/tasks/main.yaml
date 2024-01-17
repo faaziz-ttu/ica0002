@@ -17,7 +17,7 @@
     src: named.conf.options.j2
     dest: /etc/bind/named.conf.options
   notify: Restart bind
-
+  no_log: yes
 
 
 - name: Configure local.j2
@@ -25,7 +25,6 @@
     src: named.conf.local.j2
     dest: /etc/bind/named.conf.local     
   notify: Restart bind
-
 
 
 - name: Configure db.rev.j2
@@ -45,6 +44,7 @@
     - Reload rndc
   when: inventory_hostname in groups ['dns_primary']
 
+
 - name: Bind9 exporter
   apt:
     name: 
@@ -60,31 +60,32 @@
   meta: flush_handlers
 
 
-- name: Create A records
-  community.general.nsupdate:
-    key_name: "nsupdate.key"
-    key_algorithm: "hmac-sha256"
-    key_secret: "{{ dns_nsupdate_key}}"
-    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
-    zone: "{{ fqdn }}."
-    record: "{{ item['subdomain'] }}.{{ fqdn }}."
-    type: "A"
-    value: "{{ item['ip'] }}"
-  loop: "{{ a_records }}"
-  when: inventory_hostname in groups ['dns_primary']
-
-- name: Create CNAME records
+- name: Add A server records
   community.general.nsupdate:
     key_name: "nsupdate.key"
     key_algorithm: "hmac-sha256"
     key_secret: "{{ dns_nsupdate_key }}"
-    server: "{{ hostvars[groups['dns_primary'][0]]['ansible_default_ipv4']['address'] }}"
+    server: "localhost"
+    zone: "{{ fqdn }}"
+    record: "{{ item.key }}"
+    type: "A"
+    value: "{{ item.value }}"
+  loop: "{{ dns_a_records | dict2items }}"
+  when: inventory_hostname in groups['dns_primary']
+  no_log: yes
+
+- name: Add DNS CNAME records
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ dns_nsupdate_key }}"
+    server: "localhost"
     zone: "{{ fqdn }}"
     record: "{{ item.key }}"
     type: "CNAME"
     value: "{{ item.value }}"
-  loop: "{{ dns_cname_records | dict2items }}"
-  when: inventory_hostname in groups ['dns_primary']
-
+  loop: "{{ dns_dns_records | dict2items }}"
+  delegate_to: "{{ groups['dns_primary'][0] }}"
+  no_log: yes
 
 

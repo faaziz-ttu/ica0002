@@ -3,6 +3,8 @@
   hosts: init
   roles:
     - init
+  tags:
+    - init
 
 - name: DNS server
   hosts: dns_servers
@@ -24,47 +26,56 @@
     - docker
   tags: 
     - doc
-#added resolv.conf to uwsgi templates to from lab 5
 
 - name: Database server
   hosts: db_servers
   roles:
     - mysql
+  tags:
+    - db
 
 - name: Web server
   hosts: web_servers
   roles:
-#    - agama
-#    - uwsgi
+    - nginx
+  tags:
+    - web
     - nginx
     
 - name: Agama
   hosts: agama
   roles:
     - agama
-
+  tags:
+    - agama
 
 - name: Configure Prometheus
   hosts: prometheus
   roles:
     - prometheus
-    - nginx
-    
+  tags:
+    - promo
+
 - name: Grafana
   hosts: grafana
   roles:
     - grafana
-    
+  tags:
+    - grafana
+
 - name: Influxdb
   hosts: influxdb
   roles:
     - influxdb
-
+  tags:
+    - influxdb
     
 - name: Pinger
   hosts: pinger
   roles:
     - pinger  
+  tags:
+    - pinger
 
 - name: Keepalived and Haproxy
   hosts: haproxy
@@ -73,3 +84,4 @@
     - haproxy
   tags:
     - ha  
+    - keepalived

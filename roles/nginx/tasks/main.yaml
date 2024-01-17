@@ -3,29 +3,40 @@
     name: nginx
     state: present
 
+- name: install nginx exporter
+  apt:
+    name: prometheus-nginx-exporter
+    state: present
+    
 - name: copy default
   template:
      src: default.j2
      dest: /etc/nginx/sites-enabled/default
-  notify: Restart Nginx
-
+  notify: 
+    - Restart Nginx
+    - Restart Nginx exporter
+    
 - name: enable nginx service
   service:
     name: nginx
     state: started
     enabled: true
-    
-    
-# nginx exporter
-
-
-- name: install nginx exporter
-  apt:
-    name: prometheus-nginx-exporter
-    state: present
 
 - name: enable nginx exporter on boot up
   service:
     name: prometheus-nginx-exporter
     state: started
     enabled: true
+
+- name: Add Nginx CNAME records
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ dns_nsupdate_key }}"
+    server: "localhost"
+    zone: "{{ fqdn }}"
+    record: "{{ item.key }}"
+    type: "CNAME"
+    value: "{{ item.value }}"
+  loop: "{{ dns_nginx_records | dict2items }}"
+  delegate_to: "{{ groups['dns_primary'][0] }}"

@@ -12,6 +12,7 @@
     src: grafana.ini.j2
     mode: '0644'
   notify: Restart Grafana
+  no_log: yes
 
 - name: Template files
   template:
@@ -42,3 +43,15 @@
     ports: "{{ grafana_port }}:3000"
     state: started
     restart_policy: "always"
+- name: Add Grafana CNAME records
+  community.general.nsupdate:
+    key_name: "nsupdate.key"
+    key_algorithm: "hmac-sha256"
+    key_secret: "{{ dns_nsupdate_key }}"
+    server: "localhost"
+    zone: "{{ fqdn }}"
+    record: "{{ item.key }}"
+    type: "CNAME"
+    value: "{{ item.value }}"
+  loop: "{{ dns_grafana_records | dict2items }}"
+  delegate_to: "{{ groups['dns_primary'][0] }}"

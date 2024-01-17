@@ -61,6 +61,7 @@
      dest: /home/backup/.ssh/known_hosts
      owner: backup
      group: backup
+     mode: '0755'
      
 #Backup lab 10
 
@@ -69,7 +70,7 @@
      path: /home/backup/restore
      state: directory
      owner: backup
-     mode: '0744'
+     mode: '0755'
 
  - name: Duplicity
    apt:

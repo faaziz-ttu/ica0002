@@ -5,7 +5,7 @@ datasources:
     type: prometheus
     access: proxy
     orgId: 1
-    url: http://faaziz-ttu-2.fetirix.io/prometheus
+    url: http://prometheus/prometheus
     isDefault: true
     version: 1
     editable: true
@@ -14,12 +14,13 @@ datasources:
     type: influxdb
     access: proxy
     orgId: 1
-    url: http://faaziz-ttu-2.fetirix.io:8086
+    url: http://influxdb:8086
     database: latency
 
   - name: influxdb-telegraf
     type: influxdb
     access: proxy
     orgId: 1
-    url: http://faaziz-ttu-2.fetirix.io:8086
-    database: telegraf
+    url: http://influxdb:8086
+    jsonData:
+      dbName: telegraf

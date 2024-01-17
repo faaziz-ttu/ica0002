@@ -1,43 +1,46 @@
-faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=41322 ansible_user=ubuntu
-faaziz-ttu-2 ansible_host=193.40.156.67 ansible_port=30322 ansible_user=ubuntu
+faaziz-ttu-1 ansible_host=193.40.156.67 ansible_port=30622 ansible_user=ubuntu
+faaziz-ttu-2 ansible_host=193.40.156.67 ansible_port=42222 ansible_user=ubuntu
+faaziz-ttu-3 ansible_host=193.40.156.67 ansible_port=33722 ansible_user=ubuntu
+
+[init]
+faaziz-ttu-1
+faaziz-ttu-2
+faaziz-ttu-3
+
+[web_servers]
+faaziz-ttu-1
+faaziz-ttu-2
+faaziz-ttu-3
+
+[dns_primary]
+faaziz-ttu-3
+
+[dns_secondary]
+faaziz-ttu-1
+faaziz-ttu-2
+
+[dns_servers:children]
+dns_secondary
+dns_primary
 
 [db_servers]
 faaziz-ttu-1
 faaziz-ttu-2
 
-[dns_primary]
-faaziz-ttu-1
+[prometheus]
+faaziz-ttu-3
 
-[dns_secondary]
-faaziz-ttu-2
+[grafana]
+faaziz-ttu-3
 
-[dns_servers:children]
-dns_primary
-dns_secondary
+[influxdb]
+faaziz-ttu-3
 
-[web_servers]
-faaziz-ttu-1
-
-#node_exporter
-[init]
-faaziz-ttu-1
-faaziz-ttu-2
+[pinger]
+faaziz-ttu-3
 
 [agama]
 faaziz-ttu-1
-faaziz-ttu-2
-
-
-[prometheus]
-faaziz-ttu-2
-
-[grafana]
-faaziz-ttu-2
-
-[influxdb]
-faaziz-ttu-2
-
-[pinger]
 faaziz-ttu-2
 
 [keepalived_master]

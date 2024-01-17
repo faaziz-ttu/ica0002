@@ -1,12 +1,12 @@
 ---
 
   - name: Install Prometheus
-    ansible.builtin.apt:
+    apt:
       name: 
         - prometheus
 
   - name: Configure Prometheus
-    ansible.builtin.template: 
+    template: 
       src: prometheus.yml.j2
       dest: /etc/prometheus/prometheus.yml
     notify: 
@@ -14,7 +14,7 @@
     
     
   - name: Configure Prometheus' web path
-    ansible.builtin.template:
+    template:
       src: prometheus.service.j2
       dest: /etc/default/prometheus
     notify: 
@@ -22,8 +22,20 @@
       - Restart Prometheus 
 
   - name: start prometheus
-    ansible.builtin.service:
+    service:
       name: prometheus
       state: started
       enabled: yes
-    become: yes 
+      
+  - name: Add Prometheus CNAME records
+    community.general.nsupdate:
+      key_name: "nsupdate.key"
+      key_algorithm: "hmac-sha256"
+      key_secret: "{{ dns_nsupdate_key }}"
+      server: "localhost"
+      zone: "{{ fqdn }}"
+      record: "{{ item.key }}"
+      type: "CNAME"
+      value: "{{ item.value }}"
+    loop: "{{ dns_prometheus_records | dict2items }}"
+    delegate_to: "{{ groups['dns_primary'][0] }}"

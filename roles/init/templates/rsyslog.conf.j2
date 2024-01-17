@@ -1,8 +1,8 @@
-# action(type="omfwd" Protocol="udp" Target="faaziz-ttu-2.{{ fqdn }}" Port="6514" Template="RSYSLOG_SyslogProtocol23Format")
+# action(type="omfwd" Protocol="udp" Target="influxdb" Port="6514" Template="RSYSLOG_SyslogProtocol23Format")
 
 
 $ActionQueueType LinkedList # use asynchronous processing
 $ActionQueueFileName srvrfwd # set file name, also enables disk mode
 $ActionResumeRetryCount -1 # infinite retries on insert failure
 $ActionQueueSaveOnShutdown on # save in-memory data if rsyslog shuts down
-*.* @{{mysql_host}}:6514;RSYSLOG_SyslogProtocol23Format
+*.*  @influxdb:6514;RSYSLOG_SyslogProtocol23Format

@@ -6,8 +6,15 @@ Ansible command to install and configure services in the infrastructure:
 
 Restoration of  MySQL data from the backup:
 
-    duplicity --no-encryption restore rsync://{user}@backup./mysql /home/backup/restore/mysql
+    sudo -i 
+    
+    su backup 
 
+    duplicity --no-encryption restore rsync://faaziz-ttu@backup.fetirix.io/mysql /home/backup/restore/mysql
+    
+    or 
+    
+    duplicity --no-encryption restore rsync://faaziz-ttu@backup:/mysql /home/backup/restore/mysql
 How can it be checked:
 
     sudo -u backup mysqldump agama >/dev/null; echo $? /*ensure that user backup can 
@@ -22,6 +29,23 @@ Main services to be backed up.
     - MySQL
     - InfluxDB
     - group_vars all.yaml
+
+INFLUXDB
+
+duplicity --no-encryption full /home/backup/influxdb/ rsync://faaziz-ttu@backup/influxdb
+duplicity --no-encryption restore rsync://faaziz-ttu@backup/influxdb /home/backup/restore/influxdb
+
+To restore it, change to root
+then stop telegraf service
+Then drop the telegraf database: influx -execute 'DROP DATABASE telegraf'
+then restore the table from backup: influxd restore -portable -database telegraf /home/backup/restore/influxdb
+to check
+    influx
+    show databases
+    use telegraf
+    show measurements
+    select * from syslog
+then start telegraf
 
 Backup coverage
         - MySQL

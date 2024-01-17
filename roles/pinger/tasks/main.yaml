@@ -46,7 +46,7 @@
     - Reload systemd
     - Restart pinger
 
-- name: Start pinger on boot uo 
+- name: Start pinger on boot up
   service:
     name: pinger
     state: started
